@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="content"></div>
+    <div style="text-align:center; margin-top: 40px;" id="contenido">
+        <a href="./realizarApuesta.html" class="btn btn-danger">Realizar Apuesta</a>
+        <table id="tablaapuestas" style="border: 1;" class='table table-bordered table-info'>
+            <thead>
+                <th>Usuario</th>
+                <th>Resultado</th>
+                <th>Fecha</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+        var urlEquipos= "https://apichampions.azurewebsites.net/"
+            function cargarApuesta(){
+             var request = "/api/Apuestas";
+             $.ajax({
+                 "url":urlEquipos+request,
+                 "method":"GET",
+                 "dataType":"json",
+                 success: function(data){
+                   $("#tablaapuestas tbody").text("");
+                   $.each(data,function(index,apu){
+                       var fila = $("<tr>");
+                       var colUsuario = $("<td>"
+                            , { "text": apu.usuario});
+                      var colResultado = $("<td>"
+                            , { "text": apu.resultado});
+                      var colfecha = $("<td>"
+                            , { "text": apu.fecha});                  
+                        fila.append(colUsuario);
+                        fila.append(colResultado);
+                        fila.append(colfecha);
+                       $("#tablaapuestas tbody").append(fila);
+                   })
+                 }
+             })
+        }
+
+        $(document).ready(function(){
+            cargarApuesta();
+        })
+    $("#content").load("./menuFutbol.html");
+    </script>
+</body>
+</html>

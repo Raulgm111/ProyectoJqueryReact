@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JqueryApp</title>
+    <link rel="shortcut icon" href="./images/logoJQuery.jpg">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="content"></div>
+    <div style="text-align:center; margin-top: 40px; width: 600px; margin: 0 auto;">
+        <h1>Crear Apuesta</h1>
+        <label>Usuario</label><br/>
+        <input type="text" class='form-control' id="cajaUsuario" required/><br/>
+
+        <label>Resultado</label><br/>
+        <input type="text" class='form-control' id="cajaResultado" required/><br/>
+
+        <label>Fecha</label><br/>
+        <input type="text" class='form-control' id="cajaFecha" required/><br/>
+
+        <button id="botonInsertar" class='btn btn-warning' style="margin-top: 10px;">Insertar Apuesta</button>
+    </div>
+</body>
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script>
+    $("#content").load("menuFutbol.html");
+    $(document).ready(function(){
+        $("#botonInsertar").click(function () {
+            var url = "https://apichampions.azurewebsites.net/";
+
+            var usu = $("#cajaUsuario").val();
+            var res = $("#cajaResultado").val();
+            var fec = $("#cajaFecha").val();
+
+            var apuesta = new Object();
+
+            apuesta.usuario = usu;
+            apuesta.resultado = res;
+            apuesta.fecha = fec;
+
+            var dataJson = JSON.stringify(apuesta);
+            console.log(dataJson);
+
+            var request= "api/Apuestas";
+
+            $.ajax({
+                "url": url + request,
+                "type": "POST",
+                "data": dataJson,
+                "contentType": "application/json",
+                success: function(){
+                    console.log("Insertado");
+                    $(location).attr('href', './Apuestas.html');
+                }
+            });//Cierre ajax
+        });//Cierre botonInsertar
+    });//Cierre document.ready
+    
+</script>
+</html>

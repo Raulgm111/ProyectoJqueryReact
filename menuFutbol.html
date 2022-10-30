@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuChampions</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-warning bg-warning">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./home.html">Champions</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./Apuestas.html">Apuestas</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Equipo
+                </a>
+                <ul class="dropdown-menu" id="selectequipos" aria-labelledby="navbarDropdown">
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <script src="../js/jquery-3.6.1.min.js"></script>
+  
+      <script>
+        var urlEquipos= "https://apichampions.azurewebsites.net/"
+ 
+        function cargarEquipos(){
+             var request = "api/Equipos";
+ 
+             $.ajax({
+                 "url":urlEquipos+request,
+                 "method":"GET",
+                 "dataType":"json",
+                 success: function(data){
+                   $("#selectequipos").text("");
+                   $.each(data,function(index,equi){
+                       var fila = $("<li>");
+                       var listaNombre = $("<a>"
+                        ,{"text":equi.nombre,
+                        "href":"./detallesEquipo.html?idequipo="+equi.idEquipo,
+                        "class":'dropdown-item'});
+                       fila.append(listaNombre);
+                       $("#selectequipos").append(fila);
+                   })
+                 }
+             })
+        }
+        $(document).ready(function(){
+           cargarEquipos();
+        })
+     </script>
+</body>
+</html>

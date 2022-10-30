@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Jugador</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="content"></div>
+    <div style="text-align:center; margin-top: 40px;" id="jugadores">
+
+    </div>
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+            var urlEquipos= "https://apichampions.azurewebsites.net/"
+            var valorUbi = window.location.search;
+            console.log(valorUbi);
+            const urlParams = new URLSearchParams(valorUbi);
+            var valores = urlParams.get("idjugador");
+
+            function cargarJugadores(){      
+             var request = "api/Jugadores/"+valores;
+             $.getJSON(urlEquipos+request, function(data){
+                    var name=data.nombre;
+                    var imagen=data.imagen;
+                    var posicion=data.posicion;
+                    var fecha=data.fechaNacimiento;
+                    var pais=data.pais;
+
+                            var nombreJugador=$("<h1>",{
+                                "text":name
+                            });
+                            var imagenJugador=$("<img>",{
+                                "src":imagen,
+                                "style":"width:350px"
+                            })
+                            var posicionJugador=$("<h2>",{
+                                "text":"Posicion: "+posicion
+                            })
+                            var fechaJugador=$("<h3>",{
+                                "text":"Fecha: "+fecha
+                            })
+                            var paisJugador=$("<h3>",{
+                                "text":"Pais: "+pais
+                            })
+                            var botonJugadores=$("<a>",{
+                                "text":"Jugadores",
+                                "class":"btn btn-info",
+                                "href":"./detallesJugadores.html?idequipo="+data.idEquipo
+                            })
+                            $("#jugadores").append(nombreJugador);
+                            $("#jugadores").append(imagenJugador);
+                            $("#jugadores").append(posicionJugador);
+                            $("#jugadores").append(fechaJugador);
+                            $("#jugadores").append(paisJugador);
+                            $("#jugadores").append(botonJugadores);
+                })
+        }
+        $(document).ready(function(){
+            cargarJugadores();
+        })
+        $("#content").load("./menuFutbol.html");
+    </script>
+</body>
+</html>

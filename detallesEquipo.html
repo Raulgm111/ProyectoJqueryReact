@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Equipo</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+            <div id="content"></div>
+            <div style="text-align:center; margin-top: 40px;" id="equipos">
+
+            </div>
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script>
+     var urlEquipos= "https://apichampions.azurewebsites.net/"
+     var valorUbi = window.location.search;
+     console.log(valorUbi);
+     const urlParams = new URLSearchParams(valorUbi);
+     var valores = urlParams.get("idequipo");
+            function cargarEquipos(){      
+             var request = "api/Equipos/"+valores;
+             $.getJSON(urlEquipos+request, function(data){
+                    var name=data.nombre;
+                    var imagen=data.imagen;
+                    var champions=data.champions;
+                    var descripcion=data.descripcion;
+
+                            var nombreEquipo=$("<h1>",{
+                                "text":name
+                            });
+                            var imagenEquipo=$("<img>",{
+                                "src":imagen,
+                                "style":"width:150px"
+                            })
+                            var championsEquipo=$("<h2>",{
+                                "text":"Champions: "+champions
+                            })
+                            var descripcionEquipo=$("<p>",{
+                                "text":descripcion
+                            })
+                            var botonJugadores=$("<a>",{
+                                "text":"Jugadores",
+                                "class":"btn btn-success",
+                                "href":"./detallesJugadores.html?idequipo="+data.idEquipo
+                            })
+                            var botonVolver=$("<a>",{
+                                "href":"./home.html",
+                                "text":"Volver",
+                                "class":"btn btn-info text-white",
+                            })
+                            $("#equipos").append(nombreEquipo);
+                            $("#equipos").append(imagenEquipo);
+                            $("#equipos").append(championsEquipo);
+                            $("#equipos").append(descripcionEquipo);
+                            $("#equipos").append(botonJugadores);
+                            $("#equipos").append(botonVolver);
+                })
+        }
+        $(document).ready(function(){
+           cargarEquipos();
+        })
+
+    $("#content").load("./menuFutbol.html");
+</script>
+</body>
+</html>

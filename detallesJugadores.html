@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="content"></div>
+    <div style="text-align:center; margin-top: 40px;" id="contenido">
+        <a href="./home.html" class="btn btn-success">Volver</a>
+        <table id="tablajugadores" style="border: 1;" class='table table-bordered table-info'>
+            <thead>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Detalles</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script>
+     var urlEquipos= "https://apichampions.azurewebsites.net/"
+     var valorUbi = window.location.search;
+     console.log(valorUbi);
+     const urlParams = new URLSearchParams(valorUbi);
+     var valores = urlParams.get("idequipo");
+    function cargarJugadores(){
+             var request = "/api/Jugadores/JugadoresEquipo/"+valores;
+             $.ajax({
+                 "url":urlEquipos+request,
+                 "method":"GET",
+                 "dataType":"json",
+                 success: function(data){
+                   $("#tablajugadores tbody").text("");
+                   $.each(data,function(index,jug){
+                       var fila = $("<tr>");
+                       var colNombre = $("<td>"
+                            , { "text": jug.nombre});
+                       var columna = $("<td>");
+                       var imagenJugadores=$("<img>",
+                        {"src":jug.imagen,
+                         "style":"width:150px"});
+                         var colBoton = $("<td>");
+                         var boton=$("<a>"
+                        ,{"href":"./detallesJugadoreSolo.html?idjugador="+jug.idJugador
+                        , "text":"Detalles"
+                        ,"class":"btn btn-warning"})
+                        fila.append(colNombre);
+                        columna.append(imagenJugadores)
+                        fila.append(columna)
+                        colBoton.append(boton)
+                        fila.append(colBoton)
+                       $("#tablajugadores tbody").append(fila);
+                   })
+                 }
+             })
+        }
+
+        $(document).ready(function(){
+            cargarJugadores();
+        })
+
+        $("#content").load("./menuFutbol.html");
+    </script>
+</body>
+</html>
