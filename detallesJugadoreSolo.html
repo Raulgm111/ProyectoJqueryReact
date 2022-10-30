@@ -14,8 +14,8 @@
     </div>
     <script src="../js/jquery-3.6.1.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/Global.js"></script>
     <script>
-            var urlEquipos= "https://apichampions.azurewebsites.net/"
             var valorUbi = window.location.search;
             console.log(valorUbi);
             const urlParams = new URLSearchParams(valorUbi);
@@ -23,7 +23,7 @@
 
             function cargarJugadores(){      
              var request = "api/Jugadores/"+valores;
-             $.getJSON(urlEquipos+request, function(data){
+             $.getJSON(Gloabl.urlEquipos+request, function(data){
                     var name=data.nombre;
                     var imagen=data.imagen;
                     var posicion=data.posicion;

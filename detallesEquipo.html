@@ -14,15 +14,16 @@
             </div>
 <script src="../js/jquery-3.6.1.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/Global.js"></script>
 <script>
-     var urlEquipos= "https://apichampions.azurewebsites.net/"
+
      var valorUbi = window.location.search;
      console.log(valorUbi);
      const urlParams = new URLSearchParams(valorUbi);
      var valores = urlParams.get("idequipo");
             function cargarEquipos(){      
              var request = "api/Equipos/"+valores;
-             $.getJSON(urlEquipos+request, function(data){
+             $.getJSON(Global.urlEquipos+request, function(data){
                     var name=data.nombre;
                     var imagen=data.imagen;
                     var champions=data.champions;

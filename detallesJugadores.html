@@ -24,8 +24,8 @@
     </div>
     <script src="../js/jquery-3.6.1.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/Global.js"></script>
     <script>
-     var urlEquipos= "https://apichampions.azurewebsites.net/"
      var valorUbi = window.location.search;
      console.log(valorUbi);
      const urlParams = new URLSearchParams(valorUbi);
@@ -33,7 +33,7 @@
     function cargarJugadores(){
              var request = "/api/Jugadores/JugadoresEquipo/"+valores;
              $.ajax({
-                 "url":urlEquipos+request,
+                 "url":Global.urlEquipos+request,
                  "method":"GET",
                  "dataType":"json",
                  success: function(data){

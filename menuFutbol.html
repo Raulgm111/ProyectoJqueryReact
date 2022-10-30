@@ -33,15 +33,14 @@
         </div>
       </nav>
       <script src="../js/jquery-3.6.1.min.js"></script>
-  
-      <script>
-        var urlEquipos= "https://apichampions.azurewebsites.net/"
+      <script src="../js/Global.js"></script>
+      <script>    
  
         function cargarEquipos(){
              var request = "api/Equipos";
  
              $.ajax({
-                 "url":urlEquipos+request,
+                 "url":Global.urlEquipos+request,
                  "method":"GET",
                  "dataType":"json",
                  success: function(data){
