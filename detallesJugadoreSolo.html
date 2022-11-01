@@ -23,7 +23,7 @@
 
             function cargarJugadores(){      
              var request = "api/Jugadores/"+valores;
-             $.getJSON(Gloabl.urlEquipos+request, function(data){
+             $.getJSON(Global.urlEquipos+request, function(data){
                     var name=data.nombre;
                     var imagen=data.imagen;
                     var posicion=data.posicion;
