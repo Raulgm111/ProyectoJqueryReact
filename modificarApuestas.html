@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JqueryApp</title>
+    <link rel="shortcut icon" href="./images/logoJQuery.jpg">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="content"></div>
+    <div style="text-align:center; margin-top: 40px;">
+        <h1>Modificar la apuesta: <span id="idApuesta"></span></h1>
+            <input type="hidden" id="cajaId" /><br/>
+
+            <label>Usuario</label><br/>
+            <input type="text" class='form-control' id="cajaUsuario"/><br/>
+
+            <label>Resultado</label><br/>
+            <input type="text" class='form-control' id="cajaResultado"/><br/>
+
+            <label>Fecha</label><br/>
+            <input type="text" class='form-control' id="cajaFecha"/><br/>
+
+            <button class='btn btn-info' id="modificarApuesta">Modificar Apuesta</button>
+       
+    </div>
+</body>
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/Global.js"></script>
+
+<script>
+    $("#content").load("menuNavbar.html");
+
+    $(document).ready(function(){
+        var valorUbicacion = window.location.search;
+
+        const urlParams = new URLSearchParams(valorUbicacion);
+
+        var valorId = urlParams.get("idapuesta");
+        var valorUsuario = urlParams.get("usuario");
+        var valorResultado = urlParams.get("resultado");
+        var valorFecha = urlParams.get("fecha");
+
+        console.log(valorUbicacion);
+        console.log("ID: "+valorId);
+        console.log("Usuario: "+valorUsuario);
+        console.log("Resultado: "+valorResultado);
+        console.log("Fecha: "+valorFecha);
+
+        $("#idApuesta").html(valorId);
+
+        $("#cajaId").val(valorId);
+        $("#cajaUsuario").val(valorUsuario);
+        $("#cajaResultado").val(valorResultado);
+        $("#cajaFecha").val(valorFecha);
+        
+        $("#modificarApuesta").click(function(){
+
+            var nuevoValorIdApuesta = valorId;
+            var nuevoValorUsuario = $("#cajaUsuario").val();
+            var nuevoValorResultado = $("#cajaResultado").val();
+            var nuevoValorFecha = $("#cajaFecha").val();
+
+            var apuesta = new Object();
+
+            apuesta.idApuesta = nuevoValorIdApuesta;
+            apuesta.usuario = nuevoValorUsuario;
+            apuesta.resultado = nuevoValorResultado;
+            apuesta.fecha = nuevoValorFecha;
+
+            var dataJson = JSON.stringify(apuesta);
+
+            var request = "/api/Apuestas";
+
+            $.ajax({
+                "url": Global.urlEquipos + request,
+                "type": "PUT",
+                "data": dataJson,
+                "contentType": "application/json",
+                success: function(){
+                    console.log("Modificado");
+                    $(location).attr('href', './Apuestas.html');
+                }
+            }); //Cierre ajax
+        }); //Cierre modificarApuesta
+    }); //Cierre document.ready
+</script>
+</html>

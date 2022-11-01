@@ -4,44 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JqueryApp</title>
+    <link rel="shortcut icon" href="./images/logoJQuery.jpg">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <script src="../js/jquery-3.6.1.min.js"></script>
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/Global.js"></script>
     <div id="content"></div>
-        <div style="text-align:center; margin-top: 40px;" id="contenido">
-        <h1>Delete Apuestas:
-            <span style="color: orchid;" id="apuesta"> </span>
+    <div style="text-align:center; margin-top: 40px;">
+        <a class="btn btn-success" href="./Apuestas.html">Volver a la lista</a>
+        <h1>¿Seguro que quieres eliminar la Apuesta:
+            <span style="color: red;" id="idApuesta"></span>?
         </h1>
-        <form onSubmit={this.deleteApuesta}>
-            <button class='btn btn-danger' id="botoneliminar">
-                Eliminar Apuestas
-            </button>
-        </form>
+        <button class="btn btn-danger" id="botonEliminar">Eliminar Apuesta</button>
     </div>
-    <script>
-        var valorUbi = window.location.search;
-        console.log(valorUbi);
-        const urlParams = new URLSearchParams(valorUbi);
-        var valores = urlParams.get("idapuesta");
-        $("#apuesta").text(valores)
-        console.log(valores)
-        function eliminarApuesta(){
-            $("#botoneliminar").click(function(){
-            var request ="/api/Apuestas";
-            $.ajax({
-                "url":Global.urlEquipos+request,
-                "type":"DELETE",
-                success:function(){
-                    console.log("Eliminado");
-                }
-            })
-        })
-        }
-        $("#content").load("./menuFutbol.html");
-    </script>
 </body>
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/Global.js"></script>
+<script>
+    $("#content").load("menuFutbol.html");
+    $(document).ready(function(){
+        var valorUbicacion = window.location.search;
+
+        const urlParams = new URLSearchParams(valorUbicacion);
+
+        var valor = urlParams.get("idapuesta");
+
+        $("#idApuesta").html(valor);
+
+        $("#botonEliminar").click(function() {
+            var request = "api/Apuestas/"+valor;
+            $.ajax({
+                "url": Global.urlEquipos + request,
+                "type": "DELETE",
+                success: function(){
+                    console.log("Eliminado");
+                    $(location).attr('href', './Apuestas.html');
+                }
+            }); //Cierre ajax
+        }); //Cierre botonEliminar
+    }); //Cierre document.ready
+</script>
 </html>

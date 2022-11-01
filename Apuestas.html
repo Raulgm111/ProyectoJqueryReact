@@ -47,7 +47,8 @@
                         var colAccionModi = $("<td>");
                         var botonModificar = $("<a>",
                             { "text": "Modificar ",
-                            "class":"btn btn-info"
+                            "class":"btn btn-info",
+                            "href":"./modificarApuestas.html?idapuesta="+apu.idApuesta+"&usuario="+apu.usuario+"&resultado="+apu.resultado+"&fecha="+apu.fecha
                         , "data-key": apu.idApuesta});
                         var colAccionEli = $("<td>");
                         var botonEliminar = $("<a>",
