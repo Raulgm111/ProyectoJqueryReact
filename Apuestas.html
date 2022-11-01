@@ -16,6 +16,8 @@
                 <th>Usuario</th>
                 <th>Resultado</th>
                 <th>Fecha</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </thead>
             <tbody>
 
@@ -41,10 +43,25 @@
                       var colResultado = $("<td>"
                             , { "text": apu.resultado});
                       var colfecha = $("<td>"
-                            , { "text": apu.fecha});                  
+                            , { "text": apu.fecha});
+                        var colAccionModi = $("<td>");
+                        var botonModificar = $("<a>",
+                            { "text": "Modificar ",
+                            "class":"btn btn-info"
+                        , "data-key": apu.idApuesta});
+                        var colAccionEli = $("<td>");
+                        var botonEliminar = $("<a>",
+                            { "text": "Eliminar ",
+                            "class":"btn btn-danger",
+                            "href":"./eliminarApuesta.html?idapuesta="+apu.idApuesta
+                        , "data-key": apu.idApuesta});            
                         fila.append(colUsuario);
                         fila.append(colResultado);
                         fila.append(colfecha);
+                        colAccionModi.append(botonModificar)
+                        fila.append(colAccionModi)  
+                        colAccionEli.append(botonEliminar)
+                        fila.append(colAccionEli)    
                        $("#tablaapuestas tbody").append(fila);
                    })
                  }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/Global.js"></script>
+    <div id="content"></div>
+        <div style="text-align:center; margin-top: 40px;" id="contenido">
+        <h1>Delete Apuestas:
+            <span style="color: orchid;" id="apuesta"> </span>
+        </h1>
+        <form onSubmit={this.deleteApuesta}>
+            <button class='btn btn-danger' id="botoneliminar">
+                Eliminar Apuestas
+            </button>
+        </form>
+    </div>
+    <script>
+        var valorUbi = window.location.search;
+        console.log(valorUbi);
+        const urlParams = new URLSearchParams(valorUbi);
+        var valores = urlParams.get("idapuesta");
+        $("#apuesta").text(valores)
+        console.log(valores)
+        function eliminarApuesta(){
+            $("#botoneliminar").click(function(){
+            var request ="/api/Apuestas";
+            $.ajax({
+                "url":Global.urlEquipos+request,
+                "type":"DELETE",
+                success:function(){
+                    console.log("Eliminado");
+                }
+            })
+        })
+        }
+        $("#content").load("./menuFutbol.html");
+    </script>
+</body>
+</html>
